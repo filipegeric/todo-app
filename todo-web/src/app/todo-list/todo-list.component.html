@@ -1,0 +1,27 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Todo app</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>TODO: categories</p>
+    <mat-selection-list>
+      @for (todo of todos$ | async; track todo.id) {
+        <mat-list-option>
+          <span matListItemTitle>{{ todo.title }}</span>
+        </mat-list-option>
+      }
+    </mat-selection-list>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button color="primary">Add todo</button>
+  </mat-card-actions>
+</mat-card>
+
+<form (submit)="addTodo($event)">
+  <h4>Add todo</h4>
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput name="title" required />
+  </mat-form-field>
+  <button mat-button>Add</button>
+</form>
