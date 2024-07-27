@@ -14,6 +14,7 @@ class TodosService(
         val todo = Todo(
             id = idGenerator.generate(),
             title = request.title,
+            description = request.description,
             category = request.category,
             isDone = false,
             creatorId = user.id,
@@ -33,6 +34,7 @@ class TodosService(
 
         val updatedTodo = todo.copy(
             title = request.title ?: todo.title,
+            description = request.description ?: todo.description,
             category = request.category ?: todo.category,
             isDone = request.isDone ?: todo.isDone,
         )
@@ -43,11 +45,16 @@ class TodosService(
     }
 }
 
-data class CreateTodoRequest(val title: String, val category: String?)
+data class CreateTodoRequest(
+    val title: String,
+    val description: String? = null,
+    val category: String? = null,
+)
 
 data class UpdateTodoRequest(
     val id: String,
     val title: String? = null,
+    val description: String? = null,
     val category: String? = null,
     val isDone: Boolean? = null,
 )

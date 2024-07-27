@@ -12,7 +12,7 @@ class CreateTodoTests : StringSpec() {
 
     init {
         "returns created todo" {
-            val request = request(title = "Clean up")
+            val request = CreateTodoRequest(title = "Clean up")
             val user = User(id = "1")
 
             val createdTodo = service.createTodo(request, user)
@@ -22,7 +22,7 @@ class CreateTodoTests : StringSpec() {
         }
 
         "returns todo with a unique id" {
-            val request = request(title = "Clean up")
+            val request = CreateTodoRequest(title = "Clean up")
             val user = User(id = "1")
 
             val firstTodo = service.createTodo(request, user)
@@ -33,8 +33,8 @@ class CreateTodoTests : StringSpec() {
 
         "enables listing todos" {
             val user = User(id = "1")
-            val request1 = request(title = "Clean up")
-            val request2 = request(title = "Do homework")
+            val request1 = CreateTodoRequest(title = "Clean up")
+            val request2 = CreateTodoRequest(title = "Do homework")
 
             service.createTodo(request1, user)
             service.createTodo(request2, user)
@@ -44,6 +44,3 @@ class CreateTodoTests : StringSpec() {
     }
 }
 
-private fun request(title: String): CreateTodoRequest {
-    return CreateTodoRequest(title = title, category = "whatever")
-}

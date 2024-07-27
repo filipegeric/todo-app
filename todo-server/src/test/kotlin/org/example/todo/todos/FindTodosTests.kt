@@ -14,9 +14,9 @@ class FindTodosTests : StringSpec() {
             val john = User(id = "john")
             val jane = User(id = "jane")
 
-            service.createTodo(CreateTodoRequest("john 1", "cat 1"), john)
-            service.createTodo(CreateTodoRequest("jane 1", "cat 2"), jane)
-            service.createTodo(CreateTodoRequest("john 2", "cat 3"), john)
+            service.createTodo(CreateTodoRequest("john 1"), john)
+            service.createTodo(CreateTodoRequest("jane 1"), jane)
+            service.createTodo(CreateTodoRequest("john 2"), john)
 
             val johnsTodos = service.findTodos(john)
             val janesTodos = service.findTodos(jane)
