@@ -1,3 +1,5 @@
+<app-add-todo-form (todoAdded)="fetchTodos()"></app-add-todo-form>
+
 <mat-card appearance="outlined">
   <mat-card-header>
     <mat-card-title>Todo app</mat-card-title>
@@ -6,14 +8,15 @@
     <mat-selection-list>
       @for (todo of todos$ | async; track todo.id) {
         <mat-list-option [selected]="todo.isDone" (click)="toggleDoneFor(todo)">
-          <span matListItemTitle>{{ todo.title }}</span>
+          <span matListItemTitle
+            >{{ todo.title }}
+            @if (todo.category) {
+              <span>({{ todo.category }})</span>
+            }
+          </span>
+          <span matListItemSubtitle>{{ todo.description }}</span>
         </mat-list-option>
       }
     </mat-selection-list>
   </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-button color="primary">Add todo</button>
-  </mat-card-actions>
 </mat-card>
-
-<app-add-todo-form (todoAdded)="fetchTodos()"></app-add-todo-form>

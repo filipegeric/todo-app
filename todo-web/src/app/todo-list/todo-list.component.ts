@@ -12,6 +12,8 @@ import { AddTodoFormComponent } from "../add-todo-form/add-todo-form.component";
 interface Todo {
   id: string;
   title: string;
+  category?: string;
+  description?: string;
   isDone: boolean;
 }
 

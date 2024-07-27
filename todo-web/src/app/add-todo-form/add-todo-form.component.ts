@@ -19,8 +19,11 @@ export class AddTodoFormComponent {
   addTodo(event: SubmitEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const title = new FormData(form).get("title") as string;
-    this.http.post("todos", { title }).subscribe(() => {
+    const formData = new FormData(form);
+    const title = formData.get("title") as string;
+    const category = formData.get("category") as string;
+    const description = formData.get("description") as string;
+    this.http.post("todos", { title, category, description }).subscribe(() => {
       form.reset();
       this.todoAdded.emit();
     });
