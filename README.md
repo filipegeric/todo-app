@@ -8,4 +8,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Run development server for backend
 
-Run `./gradlew` for a dev server. Navigate to `http://localhost:9999/`
+Run `./gradlew bootRun` for a dev server. Navigate to `http://localhost:9999/`
