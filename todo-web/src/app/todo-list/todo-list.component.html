@@ -3,7 +3,6 @@
     <mat-card-title>Todo app</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>TODO: categories</p>
     <mat-selection-list>
       @for (todo of todos$ | async; track todo.id) {
         <mat-list-option>
@@ -17,11 +16,4 @@
   </mat-card-actions>
 </mat-card>
 
-<form (submit)="addTodo($event)">
-  <h4>Add todo</h4>
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput name="title" required />
-  </mat-form-field>
-  <button mat-button>Add</button>
-</form>
+<app-add-todo-form (todoAdded)="fetchTodos()"></app-add-todo-form>

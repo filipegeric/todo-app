@@ -7,6 +7,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { Observable } from "rxjs";
+import { AddTodoFormComponent } from "../add-todo-form/add-todo-form.component";
 
 interface Todo {
   id: string;
@@ -23,6 +24,8 @@ interface Todo {
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    AddTodoFormComponent,
+    AddTodoFormComponent,
   ],
   templateUrl: "./todo-list.component.html",
   styleUrl: "./todo-list.component.css",
@@ -33,16 +36,10 @@ export class TodoListComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.todos$ = this.http.get<Todo[]>("todos");
+    this.fetchTodos();
   }
 
-  addTodo(event: SubmitEvent) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const title = new FormData(form).get("title") as string;
-    this.http.post("todos", { title }).subscribe(() => {
-      form.reset();
-      this.todos$ = this.http.get<Todo[]>("todos");
-    });
+  fetchTodos() {
+    this.todos$ = this.http.get<Todo[]>("todos");
   }
 }
