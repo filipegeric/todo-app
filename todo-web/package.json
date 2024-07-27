@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier:check": "prettier --check \"src/**/*.ts\"",
-    "prettier:write": "prettier --write \"src/**/*.ts\""
+    "prettier:check": "prettier --check \"src/**/*.{ts,js,html,css}\"",
+    "prettier:write": "prettier --write \"src/**/*.{ts,js,html,css}\""
   },
   "private": true,
   "dependencies": {
