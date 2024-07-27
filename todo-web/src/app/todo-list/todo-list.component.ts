@@ -6,7 +6,8 @@ import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
-import { Observable } from "rxjs";
+import { MatSelectModule } from "@angular/material/select";
+import { map, Observable } from "rxjs";
 import { AddTodoFormComponent } from "../add-todo-form/add-todo-form.component";
 
 interface Todo {
@@ -29,12 +30,16 @@ interface Todo {
     MatFormFieldModule,
     AddTodoFormComponent,
     AddTodoFormComponent,
+    MatSelectModule,
   ],
   templateUrl: "./todo-list.component.html",
   styleUrl: "./todo-list.component.css",
 })
 export class TodoListComponent {
   todos$!: Observable<Todo[]>;
+  categories$!: Observable<string[]>;
+
+  selectedCategory: string | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -44,6 +49,9 @@ export class TodoListComponent {
 
   fetchTodos() {
     this.todos$ = this.http.get<Todo[]>("todos");
+    this.categories$ = this.todos$.pipe(
+      map(todos => [...new Set(todos.map(todo => todo.category!).filter(Boolean))]),
+    );
   }
 
   toggleDoneFor(todo: Todo) {
