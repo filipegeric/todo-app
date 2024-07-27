@@ -12,6 +12,7 @@ import { AddTodoFormComponent } from "../add-todo-form/add-todo-form.component";
 interface Todo {
   id: string;
   title: string;
+  isDone: boolean;
 }
 
 @Component({
@@ -41,5 +42,11 @@ export class TodoListComponent {
 
   fetchTodos() {
     this.todos$ = this.http.get<Todo[]>("todos");
+  }
+
+  toggleDoneFor(todo: Todo) {
+    this.http
+      .patch(`todos/${todo.id}`, { id: todo.id, isDone: !todo.isDone })
+      .subscribe(() => this.fetchTodos());
   }
 }

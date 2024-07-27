@@ -1,14 +1,13 @@
 package org.example.todo.todos
 
 class InMemoryTodosRepository : TodosRepository {
-    private val todos: MutableMap<String, MutableList<Todo>> = mutableMapOf()
+    private val todos: MutableMap<String, Todo> = mutableMapOf()
 
     override fun findByUserId(userId: String): List<Todo> {
-        return todos[userId]?.toList() ?: emptyList()
+        return todos.values.filter { it.creatorId == userId }
     }
 
     override fun save(todo: Todo) {
-        todos.putIfAbsent(todo.creatorId, mutableListOf())
-        todos[todo.creatorId]!!.add(todo)
+        todos[todo.id] = todo
     }
 }

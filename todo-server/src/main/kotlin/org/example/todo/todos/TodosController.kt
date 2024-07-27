@@ -24,7 +24,7 @@ class TodosController(private val service: TodosService) {
 
     @PatchMapping("/{id}")
     fun updateTodo(
-        @PathVariable id: Long,
+        @PathVariable id: String,
         @RequestBody request: UpdateTodoRequest,
         user: User,
     ) = service.updateTodo(request, user)

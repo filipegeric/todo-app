@@ -5,7 +5,7 @@
   <mat-card-content>
     <mat-selection-list>
       @for (todo of todos$ | async; track todo.id) {
-        <mat-list-option>
+        <mat-list-option [selected]="todo.isDone" (click)="toggleDoneFor(todo)">
           <span matListItemTitle>{{ todo.title }}</span>
         </mat-list-option>
       }
