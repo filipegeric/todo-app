@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import org.example.todo.auth.User
 
-
 @DisplayName("Creating a todo")
 class CreateTodoTests : StringSpec() {
     private val service = TodosModule().todosService()
@@ -22,5 +21,3 @@ class CreateTodoTests : StringSpec() {
         }
     }
 }
-
-
