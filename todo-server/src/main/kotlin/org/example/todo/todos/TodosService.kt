@@ -14,6 +14,7 @@ class TodosService(
         val todo = Todo(
             id = idGenerator.generate(),
             title = request.title,
+            category = request.category,
             creatorId = user.id,
         )
         repository.save(todo)
@@ -37,6 +38,6 @@ class TodosService(
     }
 }
 
-data class CreateTodoRequest(val title: String)
+data class CreateTodoRequest(val title: String, val category: String?)
 
 data class UpdateTodoRequest(val id: String, val title: String?)

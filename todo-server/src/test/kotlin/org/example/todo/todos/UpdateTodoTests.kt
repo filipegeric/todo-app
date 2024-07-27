@@ -24,7 +24,9 @@ class UpdateTodoTests : StringSpec() {
         }
 
         "returns updated todo" {
-            val createdTodo = service.createTodo(CreateTodoRequest("clean up"), user)
+            val createdTodo = service.createTodo(
+                CreateTodoRequest("clean up", "cat 1"), user
+            )
 
             val updatedTodo =
                 service.updateTodo(
