@@ -8,7 +8,10 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Select category</mat-label>
-      <mat-select [(value)]="selectedCategory">
+      <mat-select
+        [value]="selectedCategory$ | async"
+        (valueChange)="selectedCategory$.next($event)"
+      >
         <mat-option [value]="null">All</mat-option>
         @for (category of categories$ | async; track category) {
           <mat-option value="{{ category }}">{{ category }}</mat-option>
@@ -16,8 +19,8 @@
       </mat-select>
     </mat-form-field>
     <mat-selection-list>
-      @for (todo of todos$ | async; track todo.id) {
-        <mat-list-option [selected]="todo.isDone" (click)="toggleDoneFor(todo)">
+      @for (todo of filteredTodos$ | async; track todo.id) {
+        <mat-list-option [value]="todo.id" [selected]="todo.isDone" (click)="toggleDoneFor(todo)">
           <span matListItemTitle
             >{{ todo.title }}
             @if (todo.category) {

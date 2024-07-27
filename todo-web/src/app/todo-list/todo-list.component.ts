@@ -7,7 +7,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatSelectModule } from "@angular/material/select";
-import { map, Observable } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable } from "rxjs";
 import { AddTodoFormComponent } from "../add-todo-form/add-todo-form.component";
 
 interface Todo {
@@ -36,10 +36,10 @@ interface Todo {
   styleUrl: "./todo-list.component.css",
 })
 export class TodoListComponent {
-  todos$!: Observable<Todo[]>;
+  filteredTodos$!: Observable<Todo[]>;
   categories$!: Observable<string[]>;
 
-  selectedCategory: string | null = null;
+  selectedCategory$ = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -48,9 +48,14 @@ export class TodoListComponent {
   }
 
   fetchTodos() {
-    this.todos$ = this.http.get<Todo[]>("todos");
-    this.categories$ = this.todos$.pipe(
+    const todos$ = this.http.get<Todo[]>("todos");
+    this.categories$ = todos$.pipe(
       map(todos => [...new Set(todos.map(todo => todo.category!).filter(Boolean))]),
+    );
+    this.filteredTodos$ = combineLatest([todos$, this.selectedCategory$]).pipe(
+      map(([todos, selectedCategory]) =>
+        !selectedCategory ? todos : todos.filter(todo => todo.category === selectedCategory),
+      ),
     );
   }
 
