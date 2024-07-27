@@ -30,12 +30,19 @@ class UpdateTodoTests : StringSpec() {
 
             val updatedTodo =
                 service.updateTodo(
-                    UpdateTodoRequest(id = createdTodo.id, title = "clean down"),
+                    UpdateTodoRequest(
+                        id = createdTodo.id,
+                        title = "clean down",
+                        category = "cat 2",
+                        isDone = true,
+                    ),
                     user,
                 )
 
             createdTodo.id shouldBe updatedTodo.id
             updatedTodo.title shouldBe "clean down"
+            updatedTodo.category shouldBe "cat 2"
+            updatedTodo.isDone shouldBe true
         }
     }
 }

@@ -15,6 +15,7 @@ class TodosService(
             id = idGenerator.generate(),
             title = request.title,
             category = request.category,
+            isDone = false,
             creatorId = user.id,
         )
         repository.save(todo)
@@ -30,7 +31,11 @@ class TodosService(
         val todos = repository.findByUserId(user.id)
         val todo = todos.find { it.id == request.id } ?: throw TodoNotFoundException(request.id)
 
-        val updatedTodo = todo.copy(title = request.title ?: todo.title)
+        val updatedTodo = todo.copy(
+            title = request.title ?: todo.title,
+            category = request.category ?: todo.category,
+            isDone = request.isDone ?: todo.isDone,
+        )
 
         repository.save(updatedTodo)
 
@@ -40,4 +45,9 @@ class TodosService(
 
 data class CreateTodoRequest(val title: String, val category: String?)
 
-data class UpdateTodoRequest(val id: String, val title: String?)
+data class UpdateTodoRequest(
+    val id: String,
+    val title: String? = null,
+    val category: String? = null,
+    val isDone: Boolean? = null,
+)
