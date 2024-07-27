@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 plugins {
     id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
@@ -24,6 +27,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly("org.postgresql:postgresql")
+
+    val jUnitVersion: String by project
+    val mockkVersion: String by project
+    testImplementation("io.kotest:kotest-runner-junit5:$jUnitVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -37,4 +46,10 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    testLogging {
+        events(PASSED, FAILED, SKIPPED, STANDARD_ERROR)
+        exceptionFormat = TestExceptionFormat.FULL
+    }
+    systemProperty("kotest.framework.isolation.mode", "InstancePerTest")
+    systemProperty("kotest.tags", "!TEST_CONTAINER")
 }
